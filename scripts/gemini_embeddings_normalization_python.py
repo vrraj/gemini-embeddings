@@ -34,25 +34,77 @@ response = client.models.embed_content(
 def l2_normalize(vec):
     """Manual L2 normalization using pure Python math"""
     mag = math.sqrt(sum(x * x for x in vec))
-    return [x / mag for x in vec] if mag > 0 else vec
+    return [x / mag for x in vec] if mag > 0 else vec, mag
 
-embeddings = [
-    l2_normalize(e.values)
-    for e in response.embeddings
-]
+print("=" * 60)
+print("MANUAL PYTHON NORMALIZATION - COMPREHENSIVE ANALYSIS")
+print("=" * 60)
 
-# Print results for manual normalization
-print("=" * 60)
-print("MANUAL PYTHON NORMALIZATION")
-print("=" * 60)
-print(f"Generated {len(embeddings)} embeddings (manual normalization)")
-print(f"Embedding dimension: {len(embeddings[0])}")
-print(f"First embedding (first 5 values): {embeddings[0][:5]}")
-print(f"L2 norm of first embedding: {math.sqrt(sum(x * x for x in embeddings[0])):.6f}")
+# Process each embedding
+for i, embedding_obj in enumerate(response.embeddings):
+    raw_embedding = embedding_obj.values
+    normalized_embedding, magnitude = l2_normalize(raw_embedding)
+    
+    print(f"\n--- Embedding {i+1}: '{texts[i]}' ---")
+    print(f"Raw magnitude: {magnitude:.6f}")
+    print(f"Raw first 5 values: {[round(x, 6) for x in raw_embedding[:5]]}")
+    
+    # Verify normalization
+    normalized_magnitude = math.sqrt(sum(x * x for x in normalized_embedding))
+    print(f"Normalized magnitude: {normalized_magnitude:.6f}")
+    print(f"Normalized first 5 values: {[round(x, 6) for x in normalized_embedding[:5]]}")
+    print(f"Normalization successful: {abs(normalized_magnitude - 1.0) < 1e-10}")
+
+# Comparison analysis
+print(f"\n{'='*60}")
+print("NORMALIZED vs NON-NORMALIZED COMPARISON")
+print(f"{'='*60}")
+
+def cosine_similarity(vec1, vec2):
+    """Calculate cosine similarity between two vectors"""
+    dot_product = sum(a * b for a, b in zip(vec1, vec2))
+    mag1 = math.sqrt(sum(a * a for a in vec1))
+    mag2 = math.sqrt(sum(b * b for b in vec2))
+    return dot_product / (mag1 * mag2)
+
+# Compare first two texts
+text1_raw = response.embeddings[0].values
+text2_raw = response.embeddings[1].values
+
+text1_norm, _ = l2_normalize(text1_raw)
+text2_norm, _ = l2_normalize(text2_raw)
+
+# Raw similarity
+raw_similarity = cosine_similarity(text1_raw, text2_raw)
+
+# Normalized similarity (should be same as cosine similarity)
+norm_similarity = sum(a * b for a, b in zip(text1_norm, text2_norm))
+
+print(f"Comparing: '{texts[0]}' vs '{texts[1]}'")
+print(f"Raw vectors cosine similarity: {raw_similarity:.6f}")
+print(f"Normalized vectors dot product: {norm_similarity:.6f}")
+print(f"Difference: {abs(raw_similarity - norm_similarity):.10f}")
+print(f"Methods equivalent: {abs(raw_similarity - norm_similarity) < 1e-10}")
+
+# Magnitude impact analysis
+print(f"\n{'='*60}")
+print("MAGNITUDE IMPACT ANALYSIS")
+print(f"{'='*60}")
+
+print("Text magnitudes (before normalization):")
+for i, embedding_obj in enumerate(response.embeddings):
+    raw_embedding = embedding_obj.values
+    magnitude = math.sqrt(sum(x * x for x in raw_embedding))
+    print(f"  Text {i+1}: {magnitude:.6f}")
+
+print(f"\nAfter normalization - all magnitudes should be 1.0:")
+for i, embedding_obj in enumerate(response.embeddings):
+    raw_embedding = embedding_obj.values
+    normalized_embedding, _ = l2_normalize(raw_embedding)
+    normalized_magnitude = math.sqrt(sum(x * x for x in normalized_embedding))
+    print(f"  Text {i+1}: {normalized_magnitude:.6f}")
 
 # Verify all embeddings are normalized
-for i, embedding in enumerate(embeddings):
-    norm = math.sqrt(sum(x * x for x in embedding))
-    print(f"Embedding {i+1} L2 norm: {norm:.6f}")
+all_normalized = all(abs(math.sqrt(sum(x * x for x in l2_normalize(e.values)[0]) - 1.0) < 1e-10 for e in response.embeddings)
 
-print(f"\nAll embeddings normalized: {all(abs(math.sqrt(sum(x * x for x in emb)) - 1.0) < 1e-10 for emb in embeddings)}")
+print(f"\nAll embeddings normalized: {all_normalized}")

@@ -2,20 +2,52 @@
 
 This repository contains comprehensive examples and scripts demonstrating Gemini embeddings usage, including task type nuances, normalization, and retrieval patterns.
 
+## 🧪 Available Tests
+
+- **Basic Embeddings** - Generate and normalize embeddings with manual vs NumPy methods
+- **Task Type Analysis** - Compare RETRIEVAL_DOCUMENT vs RETRIEVAL_QUERY vs QUESTION_ANSWERING
+- **Retrieval Pipeline** - Complete indexing and search with optional Qdrant integration
+- **Streaming Tests** - Real-time streaming with multiple Gemini models
+- **Token Analysis** - Usage patterns and cost estimation
+- **Performance Benchmarks** - Normalization speed comparisons
+- **Vector Analysis** - Magnitude inspection and similarity calculations
+
 ## 🚀 Quick Start
 
-1. **Setup Environment**
+### 📋 Prerequisites
+
+Ensure your environment meets these requirements before proceeding:
+- **Python 3.10+**: Required for all scripts and examples
+- **Git** – required to clone the repository. Install: https://git-scm.com/downloads
+- **Gemini API Key:** Required for embeddings and streaming tests. [Get one here](https://aistudio.google.com/app/apikey)
+- **Optional: Docker & Docker Compose:** Required only for Qdrant vector database (optional for retrieval tests)
+
+### 1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/vrraj/gemini-embeddings.git
+   cd gemini-embeddings
+   ```
+
+### 2. **Setup Environment**
    ```bash
    cp .env.example .env
    # Edit .env with your GEMINI_API_KEY
    ```
 
-2. **Install Dependencies**
+### 3. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Run Tests**
+### 4. **Optional: Setup Qdrant (for retrieval tests)**
+   ```bash
+   # Install Qdrant (Docker easiest)
+   docker run -p 6333:6333 qdrant/qdrant
+   # Or install locally
+   pip install qdrant-client
+   ```
+
+### 5. **Run Tests**
    ```bash
    python scripts/test_gemini_embeddings.py
    python scripts/test_gemini_embed_retrieval.py
@@ -55,8 +87,9 @@ gemini-embeddings/
 - **Complete test of task types:**
   - Document indexing: `RETRIEVAL_DOCUMENT` vs no task_type
   - Query search: `RETRIEVAL_QUERY` vs `QUESTION_ANSWERING` vs no task_type
-- **Qdrant integration** for similarity search
+- **Optional Qdrant integration** for similarity search (works without Qdrant too)
 - **Vector comparisons** and performance analysis
+- **Graceful fallback** if Qdrant not available
 
 ### 3. Token Analysis (`test_gemini_tokens.py`)
 - Token usage analysis for different text lengths
