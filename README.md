@@ -44,7 +44,7 @@ Ensure your environment meets these requirements before proceeding:
    
    ```
 
-   # On Windows:
+   **On Windows:**
    ```
    venv\Scripts\activate
    ```
@@ -188,20 +188,20 @@ magnitude = math.sqrt(sum(x * x for x in embedding))
 print(f"L2 norm: {magnitude:.6f}")
 ```
 
-## 📊 What You'll Learn
+## 📊 What these scripts demonstrate
 
 1. **Task Type Impact**: How `RETRIEVAL_DOCUMENT` vs `RETRIEVAL_QUERY` affects search performance
-2. **Normalization**: Manual vs NumPy approaches and their equivalence
+2. **Normalization**: Truncated dimensions and Manual vs NumPy approaches and their equivalence
 3. **Vector Analysis**: First 10 values and magnitude inspection
 4. **Qdrant Integration**: Complete indexing and retrieval pipeline
-5. **Best Practices**: Production-ready embedding patterns
+
 
 ## 🎯 Use Cases
 
 - **RAG Systems**: Optimal document/query embedding pairs
 - **Semantic Search**: Task type selection for different scenarios
 - **Vector Databases**: Qdrant integration patterns
-- **Production Systems**: Error handling and retry logic
+
 
 ## 📈 Performance Insights
 
@@ -214,9 +214,9 @@ The tests reveal:
 
 This codebase accompanies the article discussing:
 - Gemini embeddings task type nuances
-- Production-ready implementation patterns
+- Normalization
 - Vector database integration best practices
-- Performance optimization techniques
+- Retrieval optimization
 
 ## 📝 License
 
