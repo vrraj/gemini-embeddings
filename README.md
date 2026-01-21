@@ -41,8 +41,12 @@ Ensure your environment meets these requirements before proceeding:
    # Activate virtual environment
    # On macOS/Linux:
    source venv/bin/activate
+   
+   ```
+
    # On Windows:
-   # venv\Scripts\activate
+   ```
+   venv\Scripts\activate
    ```
 
 ### 4. **Install Dependencies**
@@ -52,13 +56,21 @@ Ensure your environment meets these requirements before proceeding:
    ```
 
 ### 5. **Optional: Setup Qdrant (for retrieval tests)**
-   ```bash
-   # Install Qdrant (Docker easiest)
-   docker run -p 6333:6333 qdrant/qdrant
-   # Or install locally
-   pip install qdrant-client
 
-   ```
+**Option A: Docker (Recommended)**
+```bash
+# Ensure Docker daemon is running first
+# Then start Qdrant container
+docker run -p 6333:6333 qdrant/qdrant
+```
+
+**Option B: Local Python Installation**
+```bash
+# Install Qdrant client library (works without Docker)
+pip install qdrant-client
+```
+
+> **Note**: Docker requires the Docker daemon to be running on your system. If you prefer not to use Docker, use Option B which installs the Python client directly.
 
 ### 6. **Run Tests**
    ```bash
