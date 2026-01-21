@@ -1,18 +1,18 @@
 # Gemini Embeddings - Normalization, Embeddings and Retrieval
 
-> **📖 This repository contains the complete code implementation supporting the article: [RAG with Gemini Embeddings: What Changes When You Move Beyond OpenAI](gemini-embeddings.md)**
+> This repository contains the complete code implementation supporting the article: [RAG with Gemini Embeddings: What Changes When You Move Beyond OpenAI](gemini-embeddings.md)
 
 This repository contains examples and scripts demonstrating Gemini embeddings usage, including task type nuances, normalization, and retrieval patterns that complement the practical insights discussed in the article.
 
-## 🧪 Available Tests
+## Available Tests
 
 - **Basic Embeddings** - Generate and normalize embeddings with manual vs NumPy methods
 - **Normalization Examples** - Pure Python vs NumPy normalization with performance comparison
 - **Retrieval Pipeline** - Complete indexing and search with optional Qdrant integration
 
-## 🚀 Quick Start
+## Quick Start
 
-### 📋 Prerequisites
+### Prerequisites
 
 Ensure your environment meets these requirements before proceeding:
 - **Python 3.10+**: Required for all scripts and examples
@@ -82,7 +82,7 @@ pip install qdrant-client
 
    ```
 
-### 🔧 Troubleshooting
+### Troubleshooting
 
 **ImportError: cannot import name 'genai' from 'google'**
 ```bash
@@ -115,7 +115,7 @@ chmod -R 755 venv/
     
 ```
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 gemini-embeddings/
@@ -132,7 +132,7 @@ gemini-embeddings/
 │   └── gemini_embeddings_normalization_numpy.py   # NumPy normalization
 ```
 
-## 🧪 Test Scripts
+## Test Scripts
 
 ### 1. Basic Embeddings (`test_gemini_embeddings.py`)
 - Demonstrates basic Gemini embeddings generation
@@ -153,7 +153,7 @@ gemini-embeddings/
 
 
 
-## 🔧 Key Concepts Demonstrated
+## Key Concepts Demonstrated
 
 ### Task Type Nuances
 ```python
@@ -188,7 +188,7 @@ magnitude = math.sqrt(sum(x * x for x in embedding))
 print(f"L2 norm: {magnitude:.6f}")
 ```
 
-## 📊 What these scripts demonstrate
+## What these scripts demonstrate
 
 1. **Task Type Impact**: How `RETRIEVAL_DOCUMENT` vs `RETRIEVAL_QUERY` affects search performance
 2. **Normalization**: Truncated dimensions and Manual vs NumPy approaches and their equivalence
@@ -196,21 +196,21 @@ print(f"L2 norm: {magnitude:.6f}")
 4. **Qdrant Integration**: Complete indexing and retrieval pipeline
 
 
-## 🎯 Use Cases
+## Use Cases
 
 - **RAG Systems**: Optimal document/query embedding pairs
 - **Semantic Search**: Task type selection for different scenarios
 - **Vector Databases**: Qdrant integration patterns
 
 
-## 📈 Performance Insights
+## Performance Insights
 
 The tests reveal:
 - Task type selection  (`RETRIEVAL_QUERY` , "QUESTION_ANSWERING", `RETRIEVAL_DOCUMENT`) can impact search relevance scores and performance.
 - Normalization can affect cosine similarity calculations.
 - 
 
-## 🔗 Article Companion
+## Article Companion
 
 This codebase accompanies the article discussing:
 - Gemini embeddings task type nuances
@@ -218,11 +218,11 @@ This codebase accompanies the article discussing:
 - Vector database integration best practices
 - Retrieval optimization
 
-## 📝 License
+## License
 
 MIT License - Feel free to use these examples in your projects!
 
-## 🤝 Contributing
+## Contributing
 
 Found issues or improvements? Please open an issue or submit a PR!
 
