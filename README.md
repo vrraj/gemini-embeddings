@@ -1,16 +1,12 @@
-# Gemini Embeddings - Complete Guide
+# Gemini Embeddings - Normalization, Embeddings and Retrieval
 
 This repository contains comprehensive examples and scripts demonstrating Gemini embeddings usage, including task type nuances, normalization, and retrieval patterns.
 
 ## 🧪 Available Tests
 
 - **Basic Embeddings** - Generate and normalize embeddings with manual vs NumPy methods
-- **Task Type Analysis** - Compare RETRIEVAL_DOCUMENT vs RETRIEVAL_QUERY vs QUESTION_ANSWERING
+- **Normalization Examples** - Pure Python vs NumPy normalization with performance comparison
 - **Retrieval Pipeline** - Complete indexing and search with optional Qdrant integration
-- **Streaming Tests** - Real-time streaming with multiple Gemini models
-- **Token Analysis** - Usage patterns and cost estimation
-- **Performance Benchmarks** - Normalization speed comparisons
-- **Vector Analysis** - Magnitude inspection and similarity calculations
 
 ## 🚀 Quick Start
 
@@ -26,32 +22,84 @@ Ensure your environment meets these requirements before proceeding:
    ```bash
    git clone https://github.com/vrraj/gemini-embeddings.git
    cd gemini-embeddings
+   
    ```
 
-### 2. **Setup Environment**
+### 2. **Setup Environment - GEMINI_API_KEY**
    ```bash
    cp .env.example .env
-   # Edit .env with your GEMINI_API_KEY
+
    ```
 
-### 3. **Install Dependencies**
+### 3. **Create Virtual Environment**
+   ```bash
+   # Create virtual environment
+   python3 -m venv venv
+   
+   # Activate virtual environment
+   # On macOS/Linux:
+   source venv/bin/activate
+   # On Windows:
+   # venv\Scripts\activate
+   ```
+
+### 4. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
+
    ```
 
-### 4. **Optional: Setup Qdrant (for retrieval tests)**
+### 5. **Optional: Setup Qdrant (for retrieval tests)**
    ```bash
    # Install Qdrant (Docker easiest)
    docker run -p 6333:6333 qdrant/qdrant
    # Or install locally
    pip install qdrant-client
+
    ```
 
-### 5. **Run Tests**
+### 6. **Run Tests**
    ```bash
    python scripts/test_gemini_embeddings.py
+   python scripts/gemini_embeddings_normalization_python.py
+   python scripts/gemini_embeddings_normalization_numpy.py
+   # Need the Qdrant setup for embeddings and retrieval tests
    python scripts/test_gemini_embed_retrieval.py
+
    ```
+
+### 🔧 Troubleshooting
+
+**ImportError: cannot import name 'genai' from 'google'**
+```bash
+# Ensure you're in the virtual environment
+source venv/bin/activate
+
+# Reinstall dependencies
+pip install -r requirements.txt
+
+# Verify installation
+pip list | grep google-generativeai
+```
+
+**ModuleNotFoundError: No module named 'dotenv'**
+```bash
+# Ensure virtual environment is activated
+source venv/bin/activate
+
+# Install missing dependency
+pip install python-dotenv
+```
+
+**Permission Issues (macOS/Linux)**
+```bash
+# Use pip with user flag if needed
+pip install --user -r requirements.txt
+
+# Or fix virtual environment permissions
+chmod -R 755 venv/
+    
+```
 
 ## 📁 Repository Structure
 
@@ -66,14 +114,8 @@ gemini-embeddings/
 ├── scripts/                     # Test scripts
 │   ├── test_gemini_embeddings.py      # Basic embeddings test
 │   ├── test_gemini_embed_retrieval.py  # Full retrieval pipeline
-│   ├── test_gemini_tokens.py          # Token usage analysis
-│   ├── test_gemini_streaming.py       # Complete streaming test suite
 │   ├── gemini_embeddings_normalization_python.py  # Manual normalization
 │   └── gemini_embeddings_normalization_numpy.py   # NumPy normalization
-└── examples/                    # Code examples for article
-    ├── manual_normalization.py
-    ├── numpy_normalization.py
-    └── task_type_comparison.py
 ```
 
 ## 🧪 Test Scripts
@@ -83,7 +125,11 @@ gemini-embeddings/
 - Shows manual vs NumPy normalization
 - Prints vector values and magnitudes
 
-### 2. Retrieval Pipeline (`test_gemini_embed_retrieval.py`)
+### 2. Normalization Examples
+- **`gemini_embeddings_normalization_python.py`** - Pure Python manual normalization
+- **`gemini_embeddings_normalization_numpy.py`** - NumPy optimization with performance comparison
+
+### 3. Retrieval Pipeline (`test_gemini_embed_retrieval.py`)
 - **Complete test of task types:**
   - Document indexing: `RETRIEVAL_DOCUMENT` vs no task_type
   - Query search: `RETRIEVAL_QUERY` vs `QUESTION_ANSWERING` vs no task_type
@@ -91,20 +137,7 @@ gemini-embeddings/
 - **Vector comparisons** and performance analysis
 - **Graceful fallback** if Qdrant not available
 
-### 3. Token Analysis (`test_gemini_tokens.py`)
-- Token usage analysis for different text lengths
-- Cost estimation examples
 
-### 4. Normalization Examples
-- **`gemini_embeddings_normalization_python.py`** - Pure Python manual normalization
-- **`gemini_embeddings_normalization_numpy.py`** - NumPy optimization with performance comparison
-
-### 5. Streaming Tests
-- **`test_gemini_streaming.py`** - Complete Gemini streaming test suite
-  - Multiple model testing (flash, pro, flash-lite)
-  - Streaming vs non-streaming comparison
-  - Embeddings with task types
-  - Environment validation
 
 ## 🔧 Key Concepts Demonstrated
 
@@ -159,13 +192,13 @@ print(f"L2 norm: {magnitude:.6f}")
 ## 📈 Performance Insights
 
 The tests reveal:
-- `RETRIEVAL_QUERY` typically outperforms `RETRIEVAL_DOCUMENT` for user queries
-- Normalization is critical for cosine similarity calculations
-- Task type selection impacts search relevance scores
+- Task type selection  (`RETRIEVAL_QUERY` , "QUESTION_ANSWERING", `RETRIEVAL_DOCUMENT`) can impact search relevance scores and performance.
+- Normalization can affect cosine similarity calculations.
+- 
 
-## 🔗 LinkedIn Article Companion
+## 🔗 Article Companion
 
-This codebase accompanies the LinkedIn article discussing:
+This codebase accompanies the article discussing:
 - Gemini embeddings task type nuances
 - Production-ready implementation patterns
 - Vector database integration best practices

@@ -33,14 +33,22 @@ try:
         ),
     )
     
+    # Get Gemini native embeddings (not normalized)
+    native_embeddings = [e.values for e in response.embeddings]
+    
+    # Show native magnitude
+    native_magnitude = math.sqrt(sum(x * x for x in native_embeddings[0]))
+    print(f"Gemini native embedding magnitude (should be ~0.69): {native_magnitude:.6f}")
+    print(f"First native embedding (first 5 values): {native_embeddings[0][:5]}")
+    
     # Manual L2 normalization
     def l2_normalize(vec):
         mag = math.sqrt(sum(x * x for x in vec))
         return [x / mag for x in vec] if mag > 0 else vec
 
     embeddings_manual = [
-        l2_normalize(e.values)
-        for e in response.embeddings
+        l2_normalize(vec)
+        for vec in native_embeddings
     ]
     
     # NumPy L2 normalization
@@ -50,23 +58,25 @@ try:
         return (v / norm).tolist() if norm > 0 else vec
 
     embeddings_numpy = [
-        l2_normalize_np(e.values)
-        for e in response.embeddings
+        l2_normalize_np(vec)
+        for vec in native_embeddings
     ]
     
-    print(f"Generated {len(embeddings_manual)} embeddings (manual normalization)")
-    print(f"Embedding dimension: {len(embeddings_manual[0])}")
+    print(f"\nAfter manual normalization:")
     print(f"First embedding (first 5 values): {embeddings_manual[0][:5]}")
     print(f"L2 norm of first embedding: {math.sqrt(sum(x * x for x in embeddings_manual[0])):.6f}")
     
-    print(f"\nGenerated {len(embeddings_numpy)} embeddings (numpy normalization)")
-    print(f"Embedding dimension: {len(embeddings_numpy[0])}")
+    print(f"\nAfter numpy normalization:")
     print(f"First embedding (first 5 values): {embeddings_numpy[0][:5]}")
     print(f"L2 norm of first embedding: {math.sqrt(sum(x * x for x in embeddings_numpy[0])):.6f}")
     
+    # Show magnitude difference
+    magnitude_change = native_magnitude - 1.0
+    print(f"\nMagnitude change: {native_magnitude:.6f} → 1.000000 (difference: {abs(magnitude_change):.6f})")
+    
     # Compare results
     diff = max(abs(a - b) for a, b in zip(embeddings_manual[0], embeddings_numpy[0]))
-    print(f"\nMax difference between manual and numpy normalization: {diff:.10f}")
+    print(f"Max difference between manual and numpy normalization: {diff:.10f}")
     
 except Exception as e:
     print(f"Error generating embeddings: {e}")

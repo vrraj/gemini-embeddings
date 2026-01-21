@@ -105,6 +105,6 @@ for i, embedding_obj in enumerate(response.embeddings):
     print(f"  Text {i+1}: {normalized_magnitude:.6f}")
 
 # Verify all embeddings are normalized
-all_normalized = all(abs(math.sqrt(sum(x * x for x in l2_normalize(e.values)[0]) - 1.0) < 1e-10 for e in response.embeddings)
+all_normalized = all(abs(math.sqrt(sum(x * x for x in l2_normalize(e.values)[0])) - 1.0) < 1e-10 for e in response.embeddings)
 
 print(f"\nAll embeddings normalized: {all_normalized}")
