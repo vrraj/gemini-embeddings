@@ -1,6 +1,8 @@
 # Gemini Embeddings - Normalization, Embeddings and Retrieval
 
-This repository contains comprehensive examples and scripts demonstrating Gemini embeddings usage, including task type nuances, normalization, and retrieval patterns.
+> **📖 This repository contains the complete code implementation supporting the article: [RAG with Gemini Embeddings: What Changes When You Move Beyond OpenAI](gemini-embeddings.md)**
+
+This repository contains examples and scripts demonstrating Gemini embeddings usage, including task type nuances, normalization, and retrieval patterns that complement the practical insights discussed in the article.
 
 ## 🧪 Available Tests
 
