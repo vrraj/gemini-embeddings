@@ -1,6 +1,7 @@
 # Release Notes
 
 ## v1.0.0 - 2025-01-21
+### Gemini Embeddings Examples for RAG Migration
 
 ### Release Overview
 

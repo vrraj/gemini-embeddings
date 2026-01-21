@@ -1,4 +1,4 @@
-# Gemini Embeddings - Normalization, Embeddings and Retrieval
+# Gemini Embeddings - Truncation, Normalization and Retrieval
 
 > This repository contains the complete code implementation supporting the article: [RAG with Gemini Embeddings: What Changes When You Move Beyond OpenAI](gemini-embeddings.md)
 
