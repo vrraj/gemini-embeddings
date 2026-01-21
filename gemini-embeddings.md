@@ -65,9 +65,9 @@ In my stack, I use Qdrant. By configuring the collection with distance=Cosine, n
 
 A quick test confirmed this behavior: a raw 1536-dim Gemini embedding with an L2 norm of ~0.69 was returned from Qdrant with a norm of exactly 1.0—closing a ~30% magnitude gap that would have otherwise skewed retrieval.
 
-============================================================
-TESTING QDRANT AUTOMATIC NORMALIZATION
-============================================================
+
+**TESTING QDRANT AUTOMATIC NORMALIZATION**
+
 Raw embedding L2 norm: 0.691057
 Raw embedding (first 8 values): [-0.0297, 0.017206, -0.000331, -0.075324, -1.5e-05, 0.008705, -0.016225, 0.016641]
 
